@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "scripts": {
+  "postinstall": "npm install --omit=dev"
+}
+
   "keywords": [],
   "author": "",
   "license": "ISC",
