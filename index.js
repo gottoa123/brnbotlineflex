@@ -1,12 +1,23 @@
 const express = require("express");
+const line = require('@line/bot-sdk');
 const bodyParser = require("body-parser");
 const axios = require("axios"); // ใช้สำหรับส่งข้อความไปยัง LINE
 
 const app = express();
 app.use(bodyParser.json());
 
-const LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN; // เปลี่ยนเป็น ACCESS TOKEN ของคุณ
+const config = {
+  channelAccessToken: process.env.LINE_ACCESS_TOKEN,
+  channelSecret: process.env.LINE_CHANNEL_SECRET,
+};
 
+// สร้าง client สำหรับ LINE Messaging API
+const client = new line.Client(config);
+
+// ใช้ middleware ของ LINE SDK
+app.use(line.middleware(config));
+
+// Webhook endpoint
 app.post("/webhook", async (req, res) => {
   const events = req.body.events;
 
@@ -604,47 +615,14 @@ app.post("/webhook", async (req, res) => {
 
           try {
             console.log("Sending message:", messageData); // ตรวจสอบข้อมูลที่กำลังจะส่ง
-            await axios.post(
-              "https://api.line.me/v2/bot/message/push",
-              messageData,
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${LINE_ACCESS_TOKEN}`,
-                },
-              },
-            );
+            await client.replyMessage(event.replyToken, messageData);
           } catch (error) {
-            console.error(
-              "Error sending message:",
-              error.response ? error.response.data : error.message,
-            );
+            console.error("Error sending message:", error.message);
           }
         }
       }
     }
   }
-
-  // Webhook endpoint
-  app.post("/webhook", line.middleware(config), (req, res) => {
-    Promise.all(
-      req.body.events.map((event) => {
-        if (event.type === "message" && event.message.type === "text") {
-          const flexMessage = createFlexMessage();
-          return client.replyMessage(event.replyToken, {
-            type: "flex",
-            ...flexMessage,
-          });
-        }
-        return Promise.resolve(null);
-      }),
-    )
-      .then(() => res.sendStatus(200))
-      .catch((err) => {
-        console.error(err);
-        res.sendStatus(500);
-      });
-  });
 
   res.sendStatus(200);
 });
