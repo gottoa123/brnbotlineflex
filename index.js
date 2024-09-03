@@ -7,8 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const config = {
-  channelAccessToken: process.env.LINE_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_CHANNEL_SECRET,
+  LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN;
 };
 
 // สร้าง client สำหรับ LINE Messaging API
