@@ -8,7 +8,9 @@ app.use(bodyParser.json());
 
 const config = {
   channelAccessToken: '9EKTpaLM3xjCASVd2HmXFyboUrm3xnAIqg9oUg+XbtVOPhVv+g+dkDLtoPgt7nuse6t1NT1EyFFMHU+fmrFSJf3ydgzkxXQ2nl1zxe0xp8YPBdFFdPDCaoUzXvr3XiTLbp9XWDyD8YrSWwWnxaSMrQdB04t89/1O/w1cDnyilFU=',
+  channelSecret: 'fdfd68cf3d20c1c3fa879b1f4fb4dd43'
 };
+
 
 // สร้าง client สำหรับ LINE Messaging API
 const client = new line.Client(config);
