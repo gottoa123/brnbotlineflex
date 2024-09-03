@@ -1,24 +1,13 @@
 const express = require("express");
-const line = require('@line/bot-sdk');
 const bodyParser = require("body-parser");
+const line = require("@line/bot-sdk"); // ตรวจสอบว่าใช้โมดูลนี้หรือไม่
 const axios = require("axios"); // ใช้สำหรับส่งข้อความไปยัง LINE
 
 const app = express();
 app.use(bodyParser.json());
 
-const config = {
-  channelAccessToken: '9EKTpaLM3xjCASVd2HmXFyboUrm3xnAIqg9oUg+XbtVOPhVv+g+dkDLtoPgt7nuse6t1NT1EyFFMHU+fmrFSJf3ydgzkxXQ2nl1zxe0xp8YPBdFFdPDCaoUzXvr3XiTLbp9XWDyD8YrSWwWnxaSMrQdB04t89/1O/w1cDnyilFU=',
-  channelSecret: 'fdfd68cf3d20c1c3fa879b1f4fb4dd43'
-};
+const LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN; // เปลี่ยนเป็น ACCESS TOKEN ของคุณ
 
-
-// สร้าง client สำหรับ LINE Messaging API
-const client = new line.Client(config);
-
-// ใช้ middleware ของ LINE SDK
-app.use(line.middleware(config));
-
-// Webhook endpoint
 app.post("/webhook", async (req, res) => {
   const events = req.body.events;
 
@@ -616,9 +605,21 @@ app.post("/webhook", async (req, res) => {
 
           try {
             console.log("Sending message:", messageData); // ตรวจสอบข้อมูลที่กำลังจะส่ง
-            await client.replyMessage(event.replyToken, messageData);
+            await axios.post(
+              "https://api.line.me/v2/bot/message/push",
+              messageData,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${LINE_ACCESS_TOKEN}`,
+                },
+              },
+            );
           } catch (error) {
-            console.error("Error sending message:", error.message);
+            console.error(
+              "Error sending message:",
+              error.response ? error.response.data : error.message,
+            );
           }
         }
       }
@@ -628,7 +629,7 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
