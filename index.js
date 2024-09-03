@@ -8,6 +8,12 @@ app.use(bodyParser.json());
 
 const LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN; // เปลี่ยนเป็น ACCESS TOKEN ของคุณ
 
+const accessToken = 'fxqjbLVyPgnEeTWoxXQLHFGybTm44Kf3WZvJgVsYg45xVIzV03JnXSAlVdmhaRTae6t1NT1EyFFMHU+fmrFSJf3ydgzkxXQ2nl1zxe0xp8ZGAxJz/k+79M9fu6Qa7nq3tEQwMKVo1pMWsWJzQEC/QQdB04t89/1O/w1cDnyilFU=';
+const headers = {
+  'Authorization': `Bearer ${accessToken}`,
+  'Content-Type': 'application/json'
+};
+
 app.post("/webhook", async (req, res) => {
   const events = req.body.events;
 
@@ -605,16 +611,13 @@ app.post("/webhook", async (req, res) => {
 
           try {
             console.log("Sending message:", messageData); // ตรวจสอบข้อมูลที่กำลังจะส่ง
-            await axios.post(
-              "https://api.line.me/v2/bot/message/push",
-              messageData,
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: Bearer fxqjbLVyPgnEeTWoxXQLHFGybTm44Kf3WZvJgVsYg45xVIzV03JnXSAlVdmhaRTae6t1NT1EyFFMHU+fmrFSJf3ydgzkxXQ2nl1zxe0xp8ZGAxJz/k+79M9fu6Qa7nq3tEQwMKVo1pMWsWJzQEC/QQdB04t89/1O/w1cDnyilFU=`,
-                },
-              },
-            );
+            await axios.post('https://api.line.me/v2/bot/message/reply', data, { headers: headers })
+  .then(response => {
+    console.log('Message sent successfully');
+  })
+  .catch(error => {
+    console.error('Error sending message:', error);
+  });
           } catch (error) {
             console.error(
               "Error sending message:",
