@@ -609,25 +609,22 @@ app.post("/webhook", async (req, res) => {
             };
           }
 
-          try {
-            console.log("Sending message:", messageData); // ตรวจสอบข้อมูลที่กำลังจะส่ง
-            await axios.post('https://api.line.me/v2/bot/message/reply', data, { headers: headers })
-  .then(response => {
-    console.log('Message sent successfully');
-  })
-  .catch(error => {
-    console.error('Error sending message:', error);
-  });
-          } catch (error) {
-            console.error(
-              "Error sending message:",
-              error.response ? error.response.data : error.message,
-            );
-          }
-        }
-      }
-    }
-  }
+try {
+  console.log("Sending message:", messageData); // ตรวจสอบข้อมูลที่กำลังจะส่ง
+  await axios.post('https://api.line.me/v2/bot/message/reply', messageData, { headers: headers })
+    .then(response => {
+      console.log('Message sent successfully');
+    })
+    .catch(error => {
+      console.error('Error sending message:', error);
+    });
+} catch (error) {
+  console.error(
+    "Error sending message:",
+    error.response ? error.response.data : error.message,
+  );
+}
+
 
   res.sendStatus(200);
 });
