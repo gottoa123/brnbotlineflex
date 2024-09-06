@@ -6,7 +6,6 @@ const axios = require("axios"); // ใช้สำหรับส่งข้อ
 const app = express();
 app.use(bodyParser.json());
 
-require('dotenv').config(); // ต้องติดตั้งไลบรารี dotenv ก่อน
 const LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN;
 
 console.log(`Your LINE Access Token is: ${LINE_ACCESS_TOKEN}`);
