@@ -6,7 +6,7 @@ const axios = require("axios"); // ใช้สำหรับส่งข้อ
 const app = express();
 app.use(bodyParser.json());
 
-const LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN; // เปลี่ยนเป็น ACCESS TOKEN ของคุณ
+const LINE_ACCESS_TOKEN = ${{ shared.LINE_ACCESS_TOKEN }} // เปลี่ยนเป็น ACCESS TOKEN ของคุณ
 
 app.post("/webhook", async (req, res) => {
   const events = req.body.events;
