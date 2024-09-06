@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const line = require("@line/bot-sdk"); // ตรวจสอบว่าใช้โมดูลนี้หรือไม่
 const axios = require("axios"); // ใช้สำหรับส่งข้อความไปยัง LINE
-const dotenv = require("dotenv");
 
 const app = express();
 app.use(bodyParser.json());
