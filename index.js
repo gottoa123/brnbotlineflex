@@ -217,7 +217,7 @@ app.post("/webhook", async (req, res) => {
                 },
               ],
             };
-          } else if (currentHour >= 20 && currentHour < 24) {
+          } else if (currentHour >= 8 && currentHour < 16) {
             // 8 PM - 11:59 PM
             messageData = {
               to: event.source.userId,
@@ -410,7 +410,7 @@ app.post("/webhook", async (req, res) => {
                 },
               ],
             };
-          } else if (currentHour >= 0 && currentHour < 7) {
+          } else if (currentHour >= 8 && currentHour < 16) {
             // 12 AM - 7 AM
             messageData = {
               to: event.source.userId,
@@ -631,7 +631,7 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
