@@ -217,7 +217,7 @@ app.post("/webhook", async (req, res) => {
                 },
               ],
             };
-          } else if (currentHour >= 8 && currentHour < 16) {
+          } else if (currentHour >= 20 && currentHour < 24) {
             // 8 PM - 11:59 PM
             messageData = {
               to: event.source.userId,
@@ -410,8 +410,8 @@ app.post("/webhook", async (req, res) => {
                 },
               ],
             };
-          } else if (currentHour >= 8 && currentHour < 16) {
-            // 12 AM - 7 AM
+          } else if (currentHour >= 0 && currentHour < 7) {
+  // โค้ดสำหรับช่วงเวลา 12 AM - 7 AM
             messageData = {
               to: event.source.userId,
               messages: [
