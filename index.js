@@ -10,7 +10,7 @@ LINE_ACCESS_TOKEN="${{shared.LINE_ACCESS_TOKEN}}"
 
 // const LINE_ACCESS_TOKEN = ${{ shared.LINE_ACCESS_TOKEN }}
 
-console.log(`Your LINE Access Token is: ${{shared.LINE_ACCESS_TOKEN}};
+// console.log(`Your LINE Access Token is: ${{shared.LINE_ACCESS_TOKEN}};
 
 app.post("/webhook", async (req, res) => {
   const events = req.body.events;
