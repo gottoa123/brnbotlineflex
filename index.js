@@ -6,9 +6,7 @@ const axios = require("axios"); // ใช้สำหรับส่งข้อ
 const app = express();
 app.use(bodyParser.json());
 
-{
-  "LINE_ACCESS_TOKEN": "${{shared.LINE_ACCESS_TOKEN}}"
-}
+LINE_ACCESS_TOKEN="${{shared.LINE_ACCESS_TOKEN}}"
 
 // const LINE_ACCESS_TOKEN = ${{ shared.LINE_ACCESS_TOKEN }}
 
