@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 const LINE_ACCESS_TOKEN = process.env.LINE_ACCESS_TOKEN;
 
 app.post("/webhook", async (req, res) => {
+  console.log('Request body:', req.body); // ตรวจสอบข้อมูลที่ได้รับ
   const events = req.body.events;
 
   if (events && events.length > 0) {
